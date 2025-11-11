@@ -274,11 +274,12 @@ SELECT f.title AS Película, f.length AS Duración, c.name AS Categoría
 -- actor: actor_id, first_name, last_name
 -- film_actor: actor_id, film_id
 
--- los actor_id que tienen el mismo film_id
+-- los actor_id que tienen el mismo film_id:
 SELECT actor_id, film_id
 	FROM film_actor
     WHERE film_id = film_id;
 
+-- haciendo un SELF JOIN
 SELECT fa1.actor_id AS ID1, fa2.actor_id AS ID2, COUNT(fa1.film_id) AS Num_Películas
 	FROM film_actor AS fa1
 	JOIN film_actor AS fa2 
@@ -286,7 +287,7 @@ SELECT fa1.actor_id AS ID1, fa2.actor_id AS ID2, COUNT(fa1.film_id) AS Num_Pelí
 		AND fa1.actor_id > fa2.actor_id   -- para que no vuelva a comparar los mismos pares de actores
 	GROUP BY fa1.actor_id, fa2.actor_id;
 
--- para que me devuelva los nombres de los actores:
+-- sumando la tabla actor para que me devuelva los nombres de los actores:
 SELECT fa1.actor_id AS ID1, a1.first_name AS Actor_1, fa2.actor_id AS ID2, a2.first_name AS Actor_2, COUNT(fa1.film_id) AS Num_Películas
 	FROM film_actor AS fa1
 	JOIN film_actor AS fa2 
@@ -298,4 +299,5 @@ SELECT fa1.actor_id AS ID1, a1.first_name AS Actor_1, fa2.actor_id AS ID2, a2.fi
 		ON fa2.actor_id = a2.actor_id
     GROUP BY fa1.actor_id, fa2.actor_id
     HAVING COUNT(fa1.film_id) > 1;
+
 
